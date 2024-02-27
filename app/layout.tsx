@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
-
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
@@ -19,7 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="dark:bg-dark min-h-screen dark:text-light bg-light text-dark">
+          <div
+            id="main"
+            className=" dark:bg-dark min-h-screen dark:text-light bg-light text-dark"
+          >
             {children}
           </div>
         </ThemeProvider>

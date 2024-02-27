@@ -1,3 +1,5 @@
+"use client";
+
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
   faBars,
@@ -14,8 +16,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ButtonWithIcon from "./ButtonWithIcon";
 import Tab from "./Tab";
 import { faStar, faWindowRestore } from "@fortawesome/free-regular-svg-icons";
+import { useEffect, useState } from "react";
+import Dialog from "./Dialog";
 
-export default function Topbar() {
+
+export default function Topbar({ user }: any) {
+  const [open, setOpen] = useState(false);
   const tabs = [
     {
       id: 1,
@@ -44,36 +50,43 @@ export default function Topbar() {
       icon: faStar,
     },
   ];
-  return (
-    <header className="bg-[#010409] pt-6 px-4 text-[#E6EDF3] border-b border-zinc-800">
-      <div className=" flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <ButtonWithIcon icon={faBars} />
 
-          <FontAwesomeIcon icon={faGithub} className="w-8 h-8" />
-          <a className="text-sm">danielmorais123</a>
+  
+
+  return (
+    <>
+      <Dialog open={open} />{" "}
+      <header className="bg-[#010409] pt-6 px-4 text-[#E6EDF3] border-b border-zinc-800">
+        <div className=" flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <ButtonWithIcon icon={faBars} setOpen={() => setOpen(!open)} />
+
+            <FontAwesomeIcon icon={faGithub} className="w-8 h-8" />
+            <a className="text-sm">{user.login}</a>
+          </div>
+          <div className="flex items-center gap-2.5">
+            <ButtonWithIcon icon={faMagnifyingGlass} />
+            <ButtonWithIcon
+              icon={faPlus}
+              otherIcon={faCaretDown}
+              btnClasses="w-[54px]  gap-1 flex items-center justify-center"
+            />
+            <ButtonWithIcon icon={faCodePullRequest} />
+            <ButtonWithIcon icon={faInbox} />
+            <img
+              src={user.avatar_url}
+              className="w-8 h-8 rounded-full"
+              alt=""
+            />
+            
+          </div>
         </div>
-        <div className="flex items-center gap-2.5">
-          <ButtonWithIcon icon={faMagnifyingGlass} />
-          <ButtonWithIcon
-            icon={faPlus}
-            otherIcon={faCaretDown}
-            btnClasses="w-[54px]  gap-1 flex items-center justify-center"
-          />
-          <ButtonWithIcon icon={faCodePullRequest} />
-          <ButtonWithIcon icon={faInbox} />
-          <img
-            src="https://avatars.githubusercontent.com/u/72794515?v=4"
-            className="w-8 h-8 rounded-full"
-            alt=""
-          />
-        </div>
-      </div>
-      <nav className="flex items-center gap-3 mt-7">
-        {tabs.map((tab) => (
-          <Tab key={tab.id} tab={tab} />
-        ))}
-      </nav>
-    </header>
+        <nav className="flex items-center gap-3 mt-7">
+          {tabs.map((tab) => (
+            <Tab key={tab.id} tab={tab} />
+          ))}
+        </nav>
+      </header>
+    </>
   );
 }
